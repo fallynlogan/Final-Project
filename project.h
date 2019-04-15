@@ -1,3 +1,6 @@
+#ifndef PROJECT_HPP
+#define PROJECT_HPP
+
 #include <string>
 
 struct TreeNode
@@ -50,3 +53,5 @@ class ArtMuseum
 	private:
 		TreeNode * root;
 };
+
+#endif
