@@ -163,3 +163,27 @@ void searchArtist(std::firstName, std::lastName, LLNode * head)
 			temp = temp->next;
 	}
 }
+
+
+void searchPeice(std::string title, LLNode * head)
+{
+	LLNode * temp = new LLNode;
+	temp = head; 
+	while(temp)
+	{
+		if(temp->title == title){
+			cout<<temp->title<<endl;
+			cout<<temp->firstName<<endl;
+			cout<<temp->lastName<<endl;
+			cout<<temp->region<<" ";
+			cout<<temp->date<<endl;
+			cout<<temp->yearCreated;
+			cout<<temp->medium<<endl;
+			cout<<temp->description<<endl;
+			cout<<temp->galleryNumber<<endl;
+		}
+		else
+			temp = temp->next;
+
+	}
+}
