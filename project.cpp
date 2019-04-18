@@ -37,3 +37,22 @@ void ArtMuseum::DeleteAll(TreeNode * node)
 			break;
 	}
 }
+
+void ArtMuseum::printInventory()
+{
+  printInventory(root);
+}
+
+void ArtMuseum::printInventory(TreeNode * node)
+{
+  if (node -> leftChild) printMovieInventory(node -> leftChild);
+
+  LLNode * current = node -> head;
+
+  while(current)
+  {
+    cout<< "Piece:  "<< current -> title << " Artist's last name: " << current -> lastName << endl;
+    current = current -> next;
+  }
+  if(node -> rightChild) printMovieInventory(node -> rightChild);
+}
