@@ -47,7 +47,8 @@ class ArtMuseum
 		void galleryList(); //lists all peices in a specific gallery
 		void isMore(std::string firstName, std::string lastName); //counts how many peices in collection artist has
 		void displayIsMore(); //lists the top 3 artist that have the most peices in the collection
-
+		 void printInventory();
+	
 	private:
 		TreeNode * root;
 };
