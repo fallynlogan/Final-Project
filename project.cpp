@@ -123,3 +123,30 @@ void addToList(LLNode *prev, LLNode * NewNode){
   prev->next = tempNode;
   tempNode = NULL;
 }
+
+void sortTree(LLNode ** p)
+{
+	LLNode * tempNode = *p;
+	*p = NULL;
+	while(tempNode)
+	{
+		LLNode ** left = &tempNode;
+		LLNode ** right = &tempNode->next;
+		bool sorted = false;
+		while(*right)
+		{
+			if((*right)->lastName < (*left)->lastName)
+			{
+				std::swap(*left, *right);
+				std::swap((*left)->next, (*right)->next);
+				left = &(*left)->next;
+				sorted = true;
+			}
+			else
+			{
+				left = right;
+				right = &(*right)->next;
+			}
+		}
+	}
+}
