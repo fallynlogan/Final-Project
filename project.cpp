@@ -114,3 +114,12 @@ void addPeice(std::string firstName, std::string lastName, std::string region, s
 		}
 	}
 }
+
+
+void addToList(LLNode *prev, LLNode * NewNode){
+  LLNode * tempNode = new LLNode;
+  tempNode = NewNode;
+  tempNode->next = prev->next;
+  prev->next = tempNode;
+  tempNode = NULL;
+}
