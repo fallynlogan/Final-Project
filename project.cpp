@@ -56,3 +56,61 @@ void ArtMuseum::printInventory(TreeNode * node)
   }
   if(node -> rightChild) printMovieInventory(node -> rightChild);
 }
+
+
+void addPeice(std::string firstName, std::string lastName, std::string region, std::string date, std::string medium, std::string title, std::string description, int galleryNumber, int yearCreated)
+{
+	LLNode * newPeice = new LLNode;
+	newPeice->firstName = firstName;
+	newPeice->lastName = lastName;
+	newPeice->region = region;
+	newPeice->date = date;
+	newPeice->medium = medium;
+	newPeice->title = title;
+	newPeice->description = description;
+	newPeice->galleryNumber = galleryNumber;
+	newPeice->yearCreated = yearCreated;
+
+	TreeNode * newNode = new TreeNode;
+	newNode->nameChar = lastName.at(0);
+	newNode->leftChild = NULL;
+	newNode->rightChild = NULL;
+
+	//case 1 nothing in tree 
+	if(root == NULL){
+		root = newNode;
+		newNode->parent = NULL;
+		newNode->head = newMovie;
+		newPeice->next = NULL;
+	}
+	else{
+		TreeNode * temp1 = root;
+		TreeNode * current - NULL;
+		int flag = 0;
+		while(temp1 && flag == 0){
+			current = temp1;
+			//first node in linked list
+			if(newNode->nameChar == temp1->nameChar){
+				addToList(temp1->head, newPeice);
+				flag = 1;
+			}
+			//traverse tree
+			else if (newNode->nameChar < temp1->nameChar)
+				temp1 = temp1->leftChild;
+			else if (newNode->nameChar > temp1->nameChar)
+				temp1 = temp1->rightChild;
+
+			if(newNode->nameChar < current->nameChar && flag == 0){
+				current->leftChild = newNode;
+				current->leftChild->head = newPeice;
+			}
+
+			if(newNode->nameChar > current->nameChar && flag == 0){
+				current->rightChild = newNode;
+				current->rightChild->head = newPeice;
+			}
+
+			//sortTree(&current->head);
+		}
+	}
+}
