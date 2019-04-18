@@ -150,3 +150,16 @@ void sortTree(LLNode ** p)
 		}
 	}
 }
+
+void searchArtist(std::firstName, std::lastName, LLNode * head)
+{
+	LLNode * temp = new LLNode;
+	temp = head;
+	while(temp)
+	{
+		if(temp->firstName == firstName && temp->lastName == lastName)
+			cout<<temp->title<<endl;
+		else
+			temp = temp->next;
+	}
+}
