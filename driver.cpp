@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -15,25 +16,32 @@ int main(int argc, char ** argv)
   //opens file from command line
   ifstream inFile;
   inFile.open(argv[1]);
-  TreeNode art;
+  ArtMuseum art;
 
   int totalPiecesCount = 0;
   bool run = true;
-  string title, artist;
+  string artwork;
 
-  while (!inFile.eof())
+  while(getline(inFile, artwork, '\n'))
   {
-    getline(inFile, firstName, ',');
-    getline(inFile, laseName, ',');
-    getline(inFile, region, ',');
-    getline(inFile, date, ',');
-    getline(inFile, medium, ',');
-    getline(inFile, title, ',');
-    getline(inFile, description, ',');
-    getline(inFile, galleryNumber, ',');
-    getline(inFile, yearCreated, ',\n');
-
-    addPeice(firstName, lastName, region, date, medium, title, description, stoi(galleryNumber), stoi(yearCreated));
+    stringstream comp;
+    comp << artwork;
+    int galleryNumber, count = 1;
+    string firstName, lastName, region, date, medium, title, description, yearCreated;
+    while(getline(comp,artwork,','))
+    {
+      if (count == 1) firstName = artwork;
+      else if (count == 2) lastName = artwork;
+      else if (count == 3) region = artwork;
+      else if (count == 4) date = artwork;
+      else if (count == 5) medium = artwork;
+      else if (count == 6) title = artwork;
+      else if (count == 7) description = artwork;
+      else if (count == 8) yearCreated = artwork;
+      else if (count == 9) galleryNumber = stoi(artwork);
+      count++;
+    }
+    art.addPiece(firstName, lastName, region, date, medium, title, description, galleryNumber, yearCreated);
     totalPiecesCount++;
   }
 
@@ -47,14 +55,14 @@ int main(int argc, char ** argv)
       case '1':
         cout << "---------- Enter the artwork's title ----------" << endl;
         getchar();
-        getline(cin, title);
-        art.searchPiece(title);
+        //getline(cin, title);
+        //art.searchPiece(title);
         break;
       case '2':
         cout << "---------- Enter the artwork's title ----------" << endl;
         getchar();
-        getline(cin, artist);
-        art.searchArtist(artist);
+        //getline(cin, artist);
+        //art.searchArtist(artist);
         break;
       case '3':
         cout << "---------- Printing all pieces and artists ----------" << endl;
@@ -69,8 +77,8 @@ int main(int argc, char ** argv)
         break;
       default:
         break;
-      }
-
+    }
+  }
 }
 
 void menu()
