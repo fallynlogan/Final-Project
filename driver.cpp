@@ -8,8 +8,8 @@ using namespace std;
 
 void menu();
 
-string firstName, lastName, region, date, medium, title, description;
-int galleryNumber, yearCreated;
+string firstName, lastName, region, date, medium, title, description, yearCreated, aquired;
+int galleryNumber;
 
 int main(int argc, char ** argv)
 {
@@ -21,6 +21,7 @@ int main(int argc, char ** argv)
   int totalPiecesCount = 0;
   bool run = true;
   string artwork;
+  int line = 0;
 
   while(getline(inFile, artwork, '\n'))
   {
@@ -34,20 +35,24 @@ int main(int argc, char ** argv)
       else if (count == 2) lastName = artwork;
       else if (count == 3) region = artwork;
       else if (count == 4) date = artwork;
-      else if (count == 5) medium = artwork;
-      else if (count == 6) title = artwork;
-      else if (count == 7) description = artwork;
-      else if (count == 8) yearCreated = artwork;
-      else if (count == 9) galleryNumber = stoi(artwork);
+      else if (count == 5) title = artwork;
+      else if (count == 6) yearCreated = artwork;
+      else if (count == 7) medium = artwork;
+      else if (count == 8) aquired = artwork;
+      else if (count == 9) description = artwork;
+      else if (count == 10) galleryNumber = stoi(artwork);
       count++;
     }
-    art.addPiece(firstName, lastName, region, date, medium, title, description, galleryNumber, yearCreated);
+    art.addPiece(firstName, lastName, region, date, title, yearCreated, medium, aquired, description, galleryNumber);
     totalPiecesCount++;
   }
+
+  cout << "Total Pieces Included: " << totalPiecesCount << endl;
 
   while(run)
   {
     char choice;
+    string title, artist;
     menu();
     cin >> choice;
     switch (choice)
@@ -55,8 +60,8 @@ int main(int argc, char ** argv)
       case '1':
         cout << "---------- Enter the artwork's title ----------" << endl;
         getchar();
-        //getline(cin, title);
-        //art.searchPiece(title);
+        getline(cin, title);
+        art.searchPiece(title);
         break;
       case '2':
         cout << "---------- Enter the artwork's title ----------" << endl;
