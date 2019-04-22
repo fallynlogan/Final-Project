@@ -82,9 +82,37 @@ int main(int argc, char ** argv)
         break;
       case '5':
         cout << "---------- General Information ----------" << endl;
-        art.learnAbout();
+        cout << " " <<endl;
+        cout << "                 Hours                   " << endl;
+        cout << "-----------------------------------------" << endl;
+        cout << "Tues - Sat: 11:00a.m to 5:00pm" << endl;
+        cout << "*During Fall & Spring semesters we are open Thrusdays until 7:00p.m*" << endl;
+        cout << " " << endl;
+        cout << "                On View                   " << endl; 
+        cout << "------------------------------------------" << endl;
+        cout << "Gallery 1: Permanent Exhibition. " << endl;
+        cout << "Always on view" << endl;
+        cout << " " << endl;
+        cout << "Gallery 2: Documenting Change: Our Climate, the Rockies. " << endl;
+        cout << "On view July 19, 2018 through June 8, 2019 at the CU Art Museum." << endl;
+        cout << " " << endl;
+        cout << "Galleries 3 & 4: Documenting Change: Our Climate (Past, Present, Future). " << endl;
+        cout << "On view at the CU Art Museum February 7 through July 20, 2019." << endl;
+        cout << " " << endl;
+        cout << "                Upcoming                 " << endl;
+        cout << "-----------------------------------------" << endl; 
+        cout << "Gallery 3: Master of Fine Art Thesis Exhibition." <<endl;
+        cout << "On view at CU Art Museum April 27—May 11, 2019" << endl;
+        cout << " " << endl;
+        cout << "Gallery 2: Its Honor is Hereby Pledged: Gina Adams. " << endl;
+        cout << "On view at the CU Art Museum June 6—November 2, 2019." << endl;
         break;
       case '6':
+      cout << "---------- Museum Statistics ----------" << endl;
+
+
+      break;
+      case '7':
         run = false;
         break;
       default:
@@ -101,5 +129,6 @@ void menu()
     cout  <<  "3. Print all pieces" << endl;
     cout  <<  "4. Find all pieces in a gallery"  <<  endl ;
     cout  <<  "5. General information" << endl;
-    cout  <<  "6. Quit" << endl;
+    cout  <<  "6. Museum Statistics" << endl;
+    cout  <<  "7. Quit" << endl;
 }
