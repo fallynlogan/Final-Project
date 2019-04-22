@@ -204,3 +204,33 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
   }
 }
 
+void galleryListLL(LLNode * temp, int galleryNumber)
+{
+  while(temp!=nullptr)
+  {
+    if(temp->galleryNumber == galleryNumber)
+    {
+      cout<<temp->title<<endl<<temp->firstName<<" "<<temp->lastName<<endl<<" "<<endl;
+      temp = temp->next;
+    }
+    else
+    {
+      temp = temp->next;
+    }
+  }
+}
+
+void galleryListRecur(TreeNode * current, int galleryNumber)
+{ //pre order traversal 
+  galleryListLL(current->head, galleryNumber);
+
+  galleryListRecur(current->leftChild, galleryNumber);
+  galleryListRecur(current->rightChild, galleryNumber);
+}
+
+void ArtMuseum::galleryList(int galleryNumber)
+{
+  cout<<"Pieces in gallery number: "<<galleryNumber<<endl;
+  galleryListRecur(root, galleryNumber);
+}
+
