@@ -9,9 +9,10 @@ using namespace std;
 
 void addToList(LLNode *prev, LLNode * NewNode);
 void printTreeNode(TreeNode * travel);
-void printLLNode(LLNode * head);
 void search(string title, LLNode * head);
 void dispInOrder(TreeNode *n);
+void regionRecur(TreeNode * current);
+void searchArtistRecur(TreeNode * node, string firstName, string lastName);
 
 ArtMuseum::ArtMuseum()
 {
@@ -41,28 +42,15 @@ ArtMuseum::~ArtMuseum()
   root = NULL;
 }
 
-void printLLNode(LLNode * head)
-{
-  LLNode * travel = new LLNode;
-  travel = head;
-  if (travel == nullptr) cout << "Nothing in list" << endl;
-  while (travel != nullptr)
-  {
-    cout << " >> " << travel->title << " by " << travel->lastName << endl;
-    travel = travel->next;
-  }
-}
-
 void dispInOrder(TreeNode *n)
 {
-    if(!n)
-        return;
+    if(!n) return;
     dispInOrder(n -> leftChild);
     cout << "Pieces starting with letter: " << n -> nameChar  << endl;
     LLNode *temp = n -> head;
     while(temp != nullptr)
     {
-        cout << " >> " << temp -> title << " " << temp -> lastName << endl;
+        cout << " >> " << temp -> title << " by " << temp -> lastName << endl;
         temp = temp -> next;
     }
     dispInOrder(n -> rightChild);
@@ -88,22 +76,32 @@ TreeNode* findNode(TreeNode *n, std::string title)
         return nullptr;
 }
 
-/*void ArtMuseum::searchArtist(string firstName, string lastName)
+void searchArtistRecur(TreeNode * node, string firstName, string lastName)
 {
-  LLNode * temp = new LLNode;
-  temp = head;
-  while(temp)
+  if(!node) return;
+  searchArtistRecur(node -> leftChild, firstName, lastName);
+  LLNode *temp = node -> head;
+  while(temp != nullptr)
   {
-    if(temp->firstName == firstName && temp->lastName == lastName)
-      cout<<temp->title<<endl;
-    else
+      if (lastName.compare(temp->lastName) == 0 and firstName.compare(temp->firstName) == 0)
+      {
+        cout << temp->title << endl;
+      }
       temp = temp->next;
   }
-}*/
+  searchArtistRecur(node -> rightChild, firstName, lastName);
+}
+
+void ArtMuseum::searchArtist(string firstName, string lastName)
+{
+  cout << endl << "Pieces by " << firstName << " " << lastName << ":" << endl;
+  searchArtistRecur(root, firstName, lastName);
+}
 
 void ArtMuseum::searchPiece(std::string title)
 {
   TreeNode * temp = findNode(root, title);
+  cout << endl;
   search(title, temp->head);
 }
 
@@ -115,15 +113,16 @@ void search(string title, LLNode * head)
   {
     if(temp->title == title)
     {
-      cout<<temp->title<<endl;
-      cout<<temp->firstName<<endl;
+      cout<<"    Title:           " << temp->title<< endl;
+      cout<<"    Artist:          " <<temp->firstName<< " ";
       cout<<temp->lastName<<endl;
-      cout<<temp->region<<" ";
+      cout<<"    Region:          " <<temp->region<<" ";
       cout<<temp->date<<endl;
-      cout<<temp->yearCreated;
-      cout<<temp->medium<<endl;
-      cout<<temp->description<<endl;
-      cout<<temp->galleryNumber<<endl;
+      cout<<"    Year Created:    " <<temp->yearCreated<<endl;
+      cout<<"    Medium:          " <<temp->medium<<endl;
+      cout<<"    Description      " <<temp->description<<endl;
+      cout<<"    Gallery Number:  " <<temp->galleryNumber<<endl;
+      cout<<"    Aquired:         " <<temp->aquired<<endl;
       break;
     }
     else
@@ -161,6 +160,9 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
     prev = nullptr;
 
     LLNode * newPiece = new LLNode;
+    n->head = newPiece;
+    newPiece->next=NULL;
+
     newPiece->firstName = firstName;
     newPiece->lastName = lastName;
     newPiece->region = region;
@@ -176,6 +178,7 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
   {
     LLNode * current;
     LLNode * newPiece = new LLNode;
+
     newPiece->firstName = firstName;
     newPiece->lastName = lastName;
     newPiece->region = region;
@@ -204,33 +207,31 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
   }
 }
 
-void galleryListLL(LLNode * temp, int galleryNumber)
+void galleryListRecur(TreeNode * current, int galleryNumber)
 {
-  while(temp!=nullptr)
+  if (!current) return;
+  galleryListRecur(current->leftChild, galleryNumber);
+  LLNode * temp = current->head;
+  while (temp != nullptr)
   {
     if(temp->galleryNumber == galleryNumber)
     {
-      cout<<temp->title<<endl<<temp->firstName<<" "<<temp->lastName<<endl<<" "<<endl;
-      temp = temp->next;
+      cout<< "     " << temp->title<<endl<< "      " << temp->firstName<<" "<<temp->lastName<<endl<<" "<<endl;
     }
-    else
-    {
-      temp = temp->next;
-    }
+    temp = temp->next;
   }
-}
-
-void galleryListRecur(TreeNode * current, int galleryNumber)
-{ //pre order traversal 
-  galleryListLL(current->head, galleryNumber);
-
-  galleryListRecur(current->leftChild, galleryNumber);
   galleryListRecur(current->rightChild, galleryNumber);
 }
 
 void ArtMuseum::galleryList(int galleryNumber)
 {
-  cout<<"Pieces in gallery number: "<<galleryNumber<<endl;
+  cout<< endl << "Pieces in gallery number: "<<galleryNumber<<endl<<endl;
   galleryListRecur(root, galleryNumber);
 }
 
+void ArtMuseum::learnAbout()
+{
+  cout << "---------- CU Art Museum Facts ----------" << endl;
+  cout << "The most art on display originates from the following region:" << endl;
+  regionRecur(root);
+}
