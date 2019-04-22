@@ -11,6 +11,7 @@ void addToList(LLNode *prev, LLNode * NewNode);
 void printTreeNode(TreeNode * travel);
 void printLLNode(LLNode * head);
 void search(string title, LLNode * head);
+void dispInOrder(TreeNode *n);
 
 ArtMuseum::ArtMuseum()
 {
@@ -52,58 +53,24 @@ void printLLNode(LLNode * head)
   }
 }
 
-void printTreeNode(TreeNode * travel)
+void dispInOrder(TreeNode *n)
 {
-  if (travel)
-  {
-    printTreeNode(travel->leftChild);
-    cout << "Artist's last name starting with the letter " << travel->nameChar << endl;
-    printLLNode(travel->head);
-    printTreeNode(travel->rightChild);
-  }
+    if(!n)
+        return;
+    dispInOrder(n -> leftChild);
+    cout << "Pieces starting with letter: " << n -> nameChar  << endl;
+    LLNode *temp = n -> head;
+    while(temp != nullptr)
+    {
+        cout << " >> " << temp -> title << " " << temp -> lastName << endl;
+        temp = temp -> next;
+    }
+    dispInOrder(n -> rightChild);
 }
 
-void ArtMuseum::printInventory()
+void ArtMuseum :: printInventory()
 {
-  printTreeNode(root);
-}
-
-void sortTree(LLNode ** p)
-{
-	LLNode * tempNode = *p;
-	*p = NULL;
-	while(tempNode)
-	{
-		LLNode ** left = &tempNode;
-		LLNode ** right = &tempNode->next;
-		bool sorted = false;
-		while(*right)
-		{
-			if((*right)->lastName < (*left)->lastName)
-			{
-				std::swap(*left, *right);
-				std::swap((*left)->next, (*right)->next);
-				left = &(*left)->next;
-				sorted = true;
-			}
-			else
-			{
-				left = right;
-				right = &(*right)->next;
-			}
-		}
-    *right = *p;
-    if(sorted)
-    {
-      *p = *left;
-      *left = nullptr;
-    }
-    else
-    {
-      *p = tempNode;
-      break;
-    }
-	}
+    dispInOrder(root);
 }
 
 /*void ArtMuseum::searchArtist(string firstName, string lastName, LLNode * head)
@@ -121,23 +88,18 @@ void sortTree(LLNode ** p)
 
 void ArtMuseum::searchPiece(std::string title)
 {
-  cout << root->head->title << endl;
-  cout << root->head->next->title << endl;
   search(title, root->head);
 }
 
 void search(string title, LLNode * head)
 {
-  cout << "HERE" << endl;
 	LLNode * temp = new LLNode;
   cout << temp->title << endl;
 	temp = head;
 	while(temp)
 	{
-    cout << "HERE" << endl;
 		if(temp->title == title)
     {
-      cout << "HERE" << endl;
 			cout<<temp->title<<endl;
 			cout<<temp->firstName<<endl;
 			cout<<temp->lastName<<endl;
@@ -153,8 +115,10 @@ void search(string title, LLNode * head)
 	}
 }
 
-/*TreeNode* findNode(TreeNode *n, std::string title){
-   if(n != nullptr){
+TreeNode* findNode(TreeNode *n, std::string title)
+{
+   if(n != nullptr)
+   {
        if(n -> nameChar == title[0])
            return n;
        else if(n -> nameChar > title[0])
@@ -169,6 +133,7 @@ void search(string title, LLNode * head)
 void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::string region, std::string date, std::string title, std::string yearCreated, std::string medium, std::string aquired, std::string description, int galleryNumber)
 {
   TreeNode * location = findNode(root, title);
+  cout << title << endl;
   if (location == nullptr)
   {
     TreeNode *prev = nullptr;
@@ -179,27 +144,33 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
     {
       prev = temp;
       if (n->nameChar < temp->nameChar) temp = temp->leftChild;
-      else if(temp = temp->rightChild);
-      else
-      {
-        prev->rightChild = n;
-        n->parent = prev;
-      }
-      temp = nullptr;
-      prev = nullptr;
-
-      LLNode * newPiece = new LLNode;
-      newPiece->firstName = firstName;
-      newPiece->lastName = lastName;
-      newPiece->region = region;
-      newPiece->date = date;
-      newPiece->medium = medium;
-      newPiece->title = title;
-      newPiece->description = description;
-      newPiece->galleryNumber = galleryNumber;
-      newPiece->yearCreated = yearCreated;
-      newPiece->aquired = aquired;
+      else temp = temp->rightChild;
     }
+    if (prev == nullptr) root = n;
+    else if (n->nameChar < prev->nameChar)
+    {
+      prev->leftChild = n;
+      n->parent = prev;
+    }
+    else
+    {
+      prev->rightChild = n;
+      n->parent = prev;
+    }
+    temp = nullptr;
+    prev = nullptr;
+
+    LLNode * newPiece = new LLNode;
+    newPiece->firstName = firstName;
+    newPiece->lastName = lastName;
+    newPiece->region = region;
+    newPiece->date = date;
+    newPiece->medium = medium;
+    newPiece->title = title;
+    newPiece->description = description;
+    newPiece->galleryNumber = galleryNumber;
+    newPiece->yearCreated = yearCreated;
+    newPiece->aquired = aquired;
   }
   else
   {
@@ -231,72 +202,4 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
       current->next = newPiece;
     }
   }
-}*/
-
-void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::string region, std::string date, std::string title, std::string yearCreated, std::string medium, std::string aquired, std::string description, int galleryNumber)
-{
-	LLNode * newPiece = new LLNode;
-	newPiece->firstName = firstName;
-	newPiece->lastName = lastName;
-	newPiece->region = region;
-	newPiece->date = date;
-	newPiece->medium = medium;
-	newPiece->title = title;
-	newPiece->description = description;
-	newPiece->galleryNumber = galleryNumber;
-	newPiece->yearCreated = yearCreated;
-  newPiece->aquired = aquired;
-
-	TreeNode * newNode = new TreeNode;
-	newNode->nameChar = lastName.at(0);
-	newNode->leftChild = NULL;
-	newNode->rightChild = NULL;
-
-	//case 1 nothing in tree
-	if(root == NULL)
-  {
-		root = newNode;
-		newNode->parent = NULL;
-		newNode->head = newPiece;
-		newPiece->next = NULL;
-	}
-	else
-  {
-		TreeNode * temp1 = root;
-		int flag = 0;
-		while(temp1 && flag == 0)
-    {
-			TreeNode * current = temp1;
-			if(newNode->nameChar == temp1->nameChar)
-      {
-				addToList(temp1->head, newPiece);
-				flag = 1;
-			}
-			else if (newNode->nameChar < temp1->nameChar)
-				temp1 = temp1->leftChild;
-			else if (newNode->nameChar > temp1->nameChar)
-				temp1 = temp1->rightChild;
-
-			if(newNode->nameChar < current->nameChar && flag == 0)
-      {
-				current->leftChild = newNode;
-				current->leftChild->head = newPiece;
-			}
-
-			if(newNode->nameChar > current->nameChar && flag == 0){
-				current->rightChild = newNode;
-				current->rightChild->head = newPiece;
-			}
-			sortTree(&current->head);
-		}
-	}
-}
-
-void addToList(LLNode *prev, LLNode * NewNode)
-{
-  LLNode * tempNode = new LLNode;
-  tempNode = NewNode;
-  tempNode->next = prev->next;
-  prev->next = tempNode;
-  tempNode = NULL;
 }
