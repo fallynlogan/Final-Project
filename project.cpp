@@ -229,9 +229,85 @@ void ArtMuseum::galleryList(int galleryNumber)
   galleryListRecur(root, galleryNumber);
 }
 
-void ArtMuseum::learnAbout()
+HashTable::HashTable(int bsize)
 {
-  cout << "---------- CU Art Museum Facts ----------" << endl;
-  cout << "The most art on display originates from the following region:" << endl;
-  regionRecur(root);
+    this -> tableSize = bsize;
+    hashTable = new hashNode*[tableSize];
+    for(int i=0; i<bsize; i++) hashTable[i] = nullptr;
+}
+
+bool HashTable::isInTable(string data)
+{
+  int index = getHash(data);
+  hashNode * temp = hashTable[index];
+  while (temp && temp->data != data) temp = temp->next;
+  if (temp) return true;
+  else return false;
+}
+
+void HashTable::insertItem(string key){
+    if (!isInTable(key))
+    {
+      hashNode * temp = new hashNode;
+      temp->data = key;
+      temp->count = 0;
+      temp->next = nullptr;
+
+      int index = getHash(key);
+      if (hashTable[index]) numCollisions++;
+      temp->next = hashTable[index];
+      hashTable[index] = temp;
+      numItems++;
+      addCount(key);
+    }
+    else addCount(key);
+}
+
+void HashTable::addCount(string key)
+{
+  int index = getHash(key);
+  hashNode * temp = hashTable[index];
+  while(temp->data != key) temp = temp->next;
+  temp->count++;
+}
+
+unsigned int HashTable::getHash(string key)
+{
+  unsigned int hashValue = 5381;
+  int length = key.length();
+  for (int i = 0; i < length; i++) hashValue = ((hashValue<<5)+hashValue) + key[i];
+  hashValue %= tableSize;
+  return hashValue;
+}
+
+void HashTable::printTop(int n)
+{
+    int i, j, k;
+    hashNode ** top = new hashNode * [n];
+    for (i = 0; i < n; i++)
+    {
+      top[i] = nullptr;
+    }
+    for (i = 0; i < tableSize; i++)
+    {
+      hashNode * temp = hashTable[i];
+      while(temp)
+      {
+        for (j = 0; j < n && top[j]; j++)
+          if (temp->count > top[j]->count) break;
+        if (j < n)
+        {
+          for (k = n-1; k >= j; k--)
+            if (k+1 != n) top[k+1] = top[k];
+          top[j] = temp;
+        }
+        temp = temp->next;
+      }
+    }
+    for (i = 0; i < n; i++)
+    {
+      hashNode * temp = top[i];
+      if (temp) cout << "     " << temp->data << endl;
+    }
+    delete[] top;
 }
