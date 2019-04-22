@@ -44,17 +44,16 @@ int main(int argc, char ** argv)
       count++;
     }
     art.addPiece(firstName, lastName, region, date, title, yearCreated, medium, aquired, description, galleryNumber);
-    totalPiecesCount++;
   }
-
-  cout << "Total Pieces Included: " << totalPiecesCount << endl;
 
   while(run)
   {
     char choice;
-    string title, artist;
+    string title, fn, ln, galleryNumber;
+    cout << endl;
     menu();
     cin >> choice;
+    cout << endl;
     switch (choice)
     {
       case '1':
@@ -64,22 +63,26 @@ int main(int argc, char ** argv)
         art.searchPiece(title);
         break;
       case '2':
-        cout << "---------- Enter the artwork's title ----------" << endl;
+        cout << "---------- Enter the artist's first name ----------" << endl;
         getchar();
-        //getline(cin, artist);
-        //art.searchArtist(artist);
+        getline(cin, fn);
+        cout << "---------- Enter the artist's last name ----------" << endl;
+        getline(cin, ln);
+        art.searchArtist(fn,ln);
         break;
       case '3':
         cout << "---------- Printing all pieces and artists ----------" << endl;
         art.printInventory();
         break;
       case '4':
-        cout << "---------- Enter gallery number----------" << endl;
+        cout << "---------- Enter gallery number ----------" << endl;
         getchar();
-        //getline(cin, galleryNumber);
-        art.galleryList(1);
+        getline(cin, galleryNumber);
+        art.galleryList(stoi(galleryNumber));
         break;
       case '5':
+        cout << "---------- General Information ----------" << endl;
+        art.learnAbout();
         break;
       case '6':
         run = false;
