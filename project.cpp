@@ -20,7 +20,7 @@ ArtMuseum::ArtMuseum()
 
 void DeleteAll(TreeNode * node)
 {
-	if (node)
+  if (node)
   {
     DeleteAll(node -> leftChild);
     LLNode * temp = node -> head;
@@ -73,48 +73,6 @@ void ArtMuseum :: printInventory()
     dispInOrder(root);
 }
 
-/*void ArtMuseum::searchArtist(string firstName, string lastName, LLNode * head)
-{
-	LLNode * temp = new LLNode;
-	temp = head;
-	while(temp)
-	{
-		if(temp->firstName == firstName && temp->lastName == lastName)
-			cout<<temp->title<<endl;
-		else
-			temp = temp->next;
-	}
-}*/
-
-void ArtMuseum::searchPiece(std::string title)
-{
-  search(title, root->head);
-}
-
-void search(string title, LLNode * head)
-{
-	LLNode * temp = new LLNode;
-  cout << temp->title << endl;
-	temp = head;
-	while(temp)
-	{
-		if(temp->title == title)
-    {
-			cout<<temp->title<<endl;
-			cout<<temp->firstName<<endl;
-			cout<<temp->lastName<<endl;
-			cout<<temp->region<<" ";
-			cout<<temp->date<<endl;
-			cout<<temp->yearCreated;
-			cout<<temp->medium<<endl;
-			cout<<temp->description<<endl;
-			cout<<temp->galleryNumber<<endl;
-		}
-		else
-			temp = temp->next;
-	}
-}
-
 TreeNode* findNode(TreeNode *n, std::string title)
 {
    if(n != nullptr)
@@ -130,10 +88,52 @@ TreeNode* findNode(TreeNode *n, std::string title)
         return nullptr;
 }
 
+/*void ArtMuseum::searchArtist(string firstName, string lastName)
+{
+  LLNode * temp = new LLNode;
+  temp = head;
+  while(temp)
+  {
+    if(temp->firstName == firstName && temp->lastName == lastName)
+      cout<<temp->title<<endl;
+    else
+      temp = temp->next;
+  }
+}*/
+
+void ArtMuseum::searchPiece(std::string title)
+{
+  TreeNode * temp = findNode(root, title);
+  search(title, temp->head);
+}
+
+void search(string title, LLNode * head)
+{
+  LLNode * temp = new LLNode;
+  temp = head;
+  while(temp)
+  {
+    if(temp->title == title)
+    {
+      cout<<temp->title<<endl;
+      cout<<temp->firstName<<endl;
+      cout<<temp->lastName<<endl;
+      cout<<temp->region<<" ";
+      cout<<temp->date<<endl;
+      cout<<temp->yearCreated;
+      cout<<temp->medium<<endl;
+      cout<<temp->description<<endl;
+      cout<<temp->galleryNumber<<endl;
+      break;
+    }
+    else
+      temp = temp->next;
+  }
+}
+
 void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::string region, std::string date, std::string title, std::string yearCreated, std::string medium, std::string aquired, std::string description, int galleryNumber)
 {
   TreeNode * location = findNode(root, title);
-  cout << title << endl;
   if (location == nullptr)
   {
     TreeNode *prev = nullptr;
@@ -203,3 +203,4 @@ void ArtMuseum::addPiece(std::string firstName, std::string lastName, std::strin
     }
   }
 }
+
