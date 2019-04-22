@@ -17,6 +17,9 @@ int main(int argc, char ** argv)
   ifstream inFile;
   inFile.open(argv[1]);
   ArtMuseum art;
+  HashTable hashR(400); // initializing hashes
+  HashTable hashM(400);
+  HashTable hashY(400);
 
   int totalPiecesCount = 0;
   bool run = true;
@@ -44,6 +47,9 @@ int main(int argc, char ** argv)
       count++;
     }
     art.addPiece(firstName, lastName, region, date, title, yearCreated, medium, aquired, description, galleryNumber);
+    hashR.insertItem(region); //three hashes created, sorted by region, medium, and yearCreated
+    hashM.insertItem(medium);
+    hashY.insertItem(yearCreated);
   }
 
   while(run)
@@ -88,7 +94,7 @@ int main(int argc, char ** argv)
         cout << "Tues - Sat: 11:00a.m to 5:00pm" << endl;
         cout << "*During Fall & Spring semesters we are open Thrusdays until 7:00p.m*" << endl;
         cout << " " << endl;
-        cout << "                On View                   " << endl; 
+        cout << "                On View                   " << endl;
         cout << "------------------------------------------" << endl;
         cout << "Gallery 1: Permanent Exhibition. " << endl;
         cout << "Always on view" << endl;
@@ -100,7 +106,7 @@ int main(int argc, char ** argv)
         cout << "On view at the CU Art Museum February 7 through July 20, 2019." << endl;
         cout << " " << endl;
         cout << "                Upcoming                 " << endl;
-        cout << "-----------------------------------------" << endl; 
+        cout << "-----------------------------------------" << endl;
         cout << "Gallery 3: Master of Fine Art Thesis Exhibition." <<endl;
         cout << "On view at CU Art Museum April 27—May 11, 2019" << endl;
         cout << " " << endl;
@@ -108,10 +114,14 @@ int main(int argc, char ** argv)
         cout << "On view at the CU Art Museum June 6—November 2, 2019." << endl;
         break;
       case '6':
-      cout << "---------- Museum Statistics ----------" << endl;
-
-
-      break;
+        cout << "---------- Museum Statistics ----------" << endl;
+        cout << "Top three regions:" << endl;
+        hashR.printTop(3);
+        cout << endl << "Top three mediums:" << endl;
+        hashM.printTop(3);
+        cout << endl << "Top three eras created:" << endl;
+        hashY.printTop(3);
+        break;
       case '7':
         run = false;
         break;
