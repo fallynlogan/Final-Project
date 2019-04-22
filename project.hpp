@@ -28,12 +28,19 @@ struct LLNode
 
 struct TreeNode
 {
-	char nameChar;//first letter of last name (A,B,C.. ect. )
+	char nameChar;//first letter of title (A,B,C.. ect. )
 
 	TreeNode *parent = NULL;
 	TreeNode *leftChild = NULL;
 	TreeNode *rightChild = NULL;
 	LLNode * head = NULL;
+};
+
+struct hashNode
+{
+	std::string data;
+	int count;
+	struct hashNode* next;
 };
 
 class ArtMuseum
@@ -44,12 +51,27 @@ class ArtMuseum
 		void addPiece(std::string firstName, std::string lastName, std::string region, std::string date, std::string title, std::string yearCreated, std::string medium, std::string aquired, std::string description, int galleryNumber);
 		void searchPiece(std::string title);
 		void searchArtist(std::string firstName, std::string lastName);
-		void learnAbout();
 		void galleryList(int gallery); //lists all pieces in a specific gallery
-  		void printInventory();
+    void printInventory();
 
 	private:
 		TreeNode * root;
+};
+
+class HashTable
+{
+	int tableSize;
+	hashNode ** hashTable;
+	int numItems;
+	int numCollisions;
+	unsigned int getHash(std::string region);
+
+	public:
+		HashTable(int bsize);
+		void insertItem(std::string key);
+		void addCount(std::string key);
+		void printTop(int n);
+		bool isInTable(std::string data);
 };
 
 #endif
