@@ -43,13 +43,10 @@ class ArtMuseum
 		~ArtMuseum();
 		void addPiece(std::string firstName, std::string lastName, std::string region, std::string date, std::string title, std::string yearCreated, std::string medium, std::string aquired, std::string description, int galleryNumber);
 		void searchPiece(std::string title);
-		//void learnAbout(); //thought this could be cool... just a random display
-		//void printFacts(std::string title); //displays the general info about a specified piece
-		//void largestRegion(); //counts all the known regions that pieces were created in and lists the top 5
-		void galleryList(int galleryNumber); //lists all pieces in a specific gallery
-		//void isMore(std::string firstName, std::string lastName); //counts how many pieces in collection artist has
-		//void displayIsMore(); //lists the top 3 artist that have the most pieces in the collection 
-    	void printInventory();
+		void searchArtist(std::string firstName, std::string lastName);
+		void learnAbout();
+		void galleryList(int gallery); //lists all pieces in a specific gallery
+  		void printInventory();
 
 	private:
 		TreeNode * root;
