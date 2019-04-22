@@ -74,6 +74,10 @@ int main(int argc, char ** argv)
         art.printInventory();
         break;
       case '4':
+        cout << "---------- Enter gallery number----------" << endl;
+        getchar();
+        //getline(cin, galleryNumber);
+        art.galleryList(1);
         break;
       case '5':
         break;
